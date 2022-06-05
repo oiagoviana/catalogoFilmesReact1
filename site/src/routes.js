@@ -12,9 +12,12 @@ export default function Index() {
             <Routes>
                 <Route path='/' element={<Login />} />
                 <Route path='/admin' element={<Home />} />
+
                 <Route path='/admin/cadastrar' element={<Cadastrar />} />
+                <Route path='/admin/alterar/:idParam' element={<Cadastrar />} />
+
                 <Route path='/admin/consultar' element={<Consultar />} />
-                <Route path='/admin/detalhe' element={<Detalhe />} />
+                <Route path='/admin/detalhe/:idParam' element={<Detalhe />} />
             </Routes>
         </BrowserRouter>
     )
