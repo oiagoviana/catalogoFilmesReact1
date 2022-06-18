@@ -27,9 +27,9 @@ export default function Index() {
             <Menu />
             <div className='container'>
                 <Cabecalho />
-                
+
                 <div className='conteudo'>
-                    <Detalhe  filme={filme} />
+                    <Detalhe filme={filme} />
                 </div>
             </div>
         </main>

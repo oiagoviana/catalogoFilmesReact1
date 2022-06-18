@@ -17,17 +17,14 @@ export default function Index() {
     const [lancamento, setLancamento] = useState('');
     const [imagem, setImagem] = useState();
     const [id, setId] = useState(0);
-
-
-
     const { idParam } = useParams();
-    
+
     useEffect(() => {
-                if (idParam) {
-                    carregarFilme();
-                }
-            }, [])
-    
+        if (idParam) {
+            carregarFilme();
+        }
+    }, [])
+
     async function carregarFilme() {
         const resposta = await buscarPorId(idParam);
         setNome(resposta.nome);
@@ -40,16 +37,12 @@ export default function Index() {
 
     }
 
-    
-
     async function salvarClick() {
         try {
             if (!imagem)
                 throw new Error('Escolha a capa do filme.')
 
             const usuario = storage('usuario-logado').id;
-
-           
 
             if (id === 0) {
                 const novoFilme = await cadastrarFilme(nome, avaliacao, lancamento, disponivel, sinopse, usuario);
@@ -60,17 +53,15 @@ export default function Index() {
             } else {
                 await alterarFilme(id, nome, avaliacao, lancamento, disponivel, sinopse, usuario);
 
-                if(typeof(imagem) == 'object')
-                await enviarImagemFilme(id, imagem);
+                if (typeof (imagem) == 'object')
+                    await enviarImagemFilme(id, imagem);
                 toast.dark('Filme alterado com sucesso');
             }
-
-            
         } catch (err) {
-            if(err.response)
-                toast.error(err.response.data.erro);  
-            else 
-                toast.error(err.message);  
+            if (err.response)
+                toast.error(err.response.data.erro);
+            else
+                toast.error(err.message);
         }
     }
 
@@ -98,11 +89,11 @@ export default function Index() {
 
     return (
         <main className='page page-cadastrar'>
-            
+
             <Menu selecionado='cadastrar' />
             <div className='container'>
                 <Cabecalho />
-                
+
                 <div className='conteudo'>
                     <section>
                         <h1 className='titulo'><span>&nbsp;</span> Cadastrar Novo Filme</h1>
@@ -116,13 +107,13 @@ export default function Index() {
                                     {imagem &&
                                         <img className='imagem-capa' src={mostrarImagem()} alt='' />
                                     }
-                                    <input type='file' id='imagemCapa' onChange={e => setImagem(e.target.files[0])}/>
+                                    <input type='file' id='imagemCapa' onChange={e => setImagem(e.target.files[0])} />
                                 </div>
                             </div>
                             <div>
                                 <div className='form-row'>
                                     <label>Nome:</label>
-                                    <input type='text' placeholder='Nome do filme' value={nome} onChange={e => setNome(e.target.value)}/>
+                                    <input type='text' placeholder='Nome do filme' value={nome} onChange={e => setNome(e.target.value)} />
                                 </div>
                                 <div className='form-row'>
                                     <label>Avaliação:</label>
@@ -139,16 +130,16 @@ export default function Index() {
                                 </div>
                             </div>
                             <div>
-                                <div className='form-row' style={{alignItems: 'flex-start'}}>
-                                    <label style={{marginTop: '13px'}}>Sinopse:</label>
-                                    <textarea placeholder='Sinopse do filme' value={sinopse} onChange={e => setSinopse(e.target.value)}/>
+                                <div className='form-row' style={{ alignItems: 'flex-start' }}>
+                                    <label style={{ marginTop: '13px' }}>Sinopse:</label>
+                                    <textarea placeholder='Sinopse do filme' value={sinopse} onChange={e => setSinopse(e.target.value)} />
                                 </div>
                                 <br />
                                 <br />
                                 <div className='form-row'>
                                     <label></label>
                                     <div className='btnSalvar'>
-                                        <button onClick={salvarClick}> {id === 0 ? 'SALVAR' : 'ALTERAR'} </button> &nbsp; &nbsp;     
+                                        <button onClick={salvarClick}> {id === 0 ? 'SALVAR' : 'ALTERAR'} </button> &nbsp; &nbsp;
                                         <button onClick={novoClick}>NOVO</button>
                                     </div>
                                 </div>
